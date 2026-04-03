@@ -1,19 +1,38 @@
 package mwa.giles.shiftmanager.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import mwa.giles.shiftmanager.model.Shift;
+import mwa.giles.shiftmanager.service.ShiftService;
+import mwa.giles.shiftmanager.service.UserService;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
+import java.util.List;
 
 @RestController
 public class ShiftManagerController {
 
-    @RequestMapping("/")
-    public String index() {
-        return "index";
+    private final ShiftService shiftService;
+    private final UserService userService;
+
+    public ShiftManagerController(ShiftService shiftService, UserService userService) {
+        this.shiftService = shiftService;
+        this.userService = userService;
     }
 
-    @PostMapping("/")
-    public String login(String Email, String Password) {
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Principal principal ,Model model) {
+        String username = principal.getName();
+
+        List<Shift> shifts= shiftService.getAllShifts(userService.findEmployeeIdByEmail(username));
+        model.addAttribute("shifts",shifts);
             return "dashboard";
     }
 }
