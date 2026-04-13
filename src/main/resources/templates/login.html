@@ -1,29 +1,141 @@
 <!doctype html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org">
-        <body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift Manager — Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        <h1> Shift Manager</h1>
-        <h2>Login</h2>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f0ede8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e2ddd8;
+            border-radius: 12px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .brand {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #9e9890;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #1a1916;
+            margin-bottom: 1.75rem;
+        }
+
+        .alert {
+            font-size: 13px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 1.25rem;
+        }
+        .alert-error {
+            background: #fdf2f2;
+            color: #b03030;
+            border: 1px solid #f5c6c6;
+        }
+        .alert-success {
+            background: #f2f8f2;
+            color: #2e7a2e;
+            border: 1px solid #c2e0c2;
+        }
+
+        .field {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #5a5751;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            height: 40px;
+            padding: 0 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: #1a1916;
+            background: #faf9f7;
+            border: 1px solid #ddd9d4;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #1a1916;
+            background: #ffffff;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            height: 40px;
+            margin-top: 0.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            background: #1a1916;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        button[type="submit"]:hover {
+            background: #333028;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <p class="brand">Shift Manager</p>
+        <h1>Sign in</h1>
+
+        <div class="alert alert-error" th:if="${param.error}">
+            Incorrect username or password.
+        </div>
+        <div class="alert alert-success" th:if="${param.logout}">
+            You've been signed out.
+        </div>
+
         <form th:action="@{/login}" method="post">
-
-            <!-- Error message -->
-            <div th:if="${param.error}" style="color:red;">
-                Invalid username or password.
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required autofocus />
             </div>
-
-            <!-- Logout message -->
-            <div th:if="${param.logout}">
-                You have been logged out.
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required />
             </div>
-
-            <input type="text"     name="username" placeholder="Username" required />
-            <input type="password" name="password" placeholder="Password" required />
-
-            <button type="submit">Login</button>
-
+            <button type="submit">Sign in</button>
         </form>
-
-
-
-        </body>
-    </html>
+    </div>
+</body>
+</html>

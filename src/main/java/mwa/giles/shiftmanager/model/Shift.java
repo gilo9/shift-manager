@@ -1,28 +1,30 @@
 package mwa.giles.shiftmanager.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Setter
 @Getter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table (name =  "SHIFTS")
 public class Shift {
     @Id
     @GeneratedValue
     private Long shiftId;
     public String shiftName;
     public Date shiftDate;
-    public Long employeeId;
     public double Rate;
     public double Hours;
-    public double totalpay;
+    public double totalPay;
 
-    protected Shift(){}
-    public Shift(String shiftName, Date shiftDate, int employeeId, double Rate, double Hours){}
-
-
-
-}
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private User user;
+    }
