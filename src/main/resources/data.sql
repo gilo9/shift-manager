@@ -1,9 +1,9 @@
 -- Users
-INSERT INTO EMPLOYEES (employee_id, last_name, first_name, Email, Password) VALUES
-                                                                           (1, 'Alice',   'Nguyen',   'alice.nguyen@shifts.com',   X'70617373776f726431'),
-                                                                           (2, 'Ben',     'Okafor',   'ben.okafor@shifts.com',     X'70617373776f726432'),
-                                                                           (3, 'Carla',   'Reyes',    'carla.reyes@shifts.com',    X'70617373776f726433'),
-                                                                           (4, 'Dan',     'Mitchell', 'dan.mitchell@shifts.com',   X'70617373776f726434');
+INSERT INTO EMPLOYEES (employee_id, first_name, last_name, Email, Password) VALUES
+                                                                           (1, 'Alice',   'Nguyen',   'alice.nguyen@shifts.com',   E'\\x70617373776f726431'),
+                                                                           (2, 'Ben',     'Okafor',   'ben.okafor@shifts.com',     E'\\x70617373776f726432'),
+                                                                           (3, 'Carla',   'Reyes',    'carla.reyes@shifts.com',    E'\\x70617373776f726433'),
+                                                                           (4, 'Dan',     'Mitchell', 'dan.mitchell@shifts.com',   E'\\x70617373776f726434');
 
 -- Shifts
 INSERT INTO SHIFTS (shift_id, SHIFT_NAME, SHIFT_DATE, EMPLOYEE_ID, RATE, HOURS, total_Pay) VALUES
@@ -15,4 +15,3 @@ INSERT INTO SHIFTS (shift_id, SHIFT_NAME, SHIFT_DATE, EMPLOYEE_ID, RATE, HOURS, 
                                                                                              (6,  'Evening Close',   '2025-04-08', 2, 12.50, 7.5,   93.75),
                                                                                              (7,  'Morning Open',    '2025-04-09', 3, 13.50, 8.0,  108.00),
                                                                                              (8,  'Afternoon Cover', '2025-04-09', 4, 12.50, 6.5,   81.25);
-

@@ -16,12 +16,12 @@ import java.util.Objects;
 @Table (name =  "SHIFTS")
 public class Shift {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shiftId;
     public String shiftName;
     public Date shiftDate;
-    public double Rate;
-    public double Hours;
+    public double rate;
+    public double hours;
     public double totalPay;
 
     @ManyToOne
