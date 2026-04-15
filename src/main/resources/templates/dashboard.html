@@ -166,7 +166,6 @@
                 <thead>
                     <tr>
                         <th>Shift</th>
-                        <th>Location</th>
                         <th>Date</th>
                         <th>Hours</th>
                         <th>Rate</th>
@@ -174,12 +173,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Thymeleaf loop goes here once shifts are wired up -->
-                    <!-- th:each="shift : ${shifts}" -->
-                    <tr th:if="${shifts == null or shifts.empty}">
-                        <td colspan="6">
-                            <div class="empty-state">
-                                <p>No shifts to display yet.</p>
+                <tr th:each="shift : ${shifts}">
+                    <td th:text="${shift.shiftName}">—</td>
+                    <td th:text="${#dates.format(shift.shiftDate, 'dd MMM yyyy')}">—</td>
+                    <td th:text="${shift.hours}">—</td>
+                    <td th:text="'£' + ${shift.rate}">—</td>
+                    <td th:text="'£' + ${shift.totalPay}">—</td>
+                </tr>
+                <tr th:if="${shifts == null or shifts.empty}">
+                    <td colspan="5">
+                        <div class="empty-state">
+                            <p>No shifts to display yet.</p>
                             </div>
                         </td>
                     </tr>

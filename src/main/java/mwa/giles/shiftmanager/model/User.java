@@ -16,13 +16,15 @@ import mwa.giles.shiftmanager.model.Shift;
 @Table(name ="EMPLOYEES")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long EmployeeId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @SequenceGenerator(name = "users_seq", sequenceName = "users_id_seq", allocationSize = 1)
+    private Long employeeId;
 
     private String firstName;
     private String lastName;
-    private String Email;
-    private byte Password;
+    @Column(unique=true)
+    private String email;
+    private byte[] password;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default

@@ -9,5 +9,7 @@ import mwa.giles.shiftmanager.model.Shift;
 @Repository
 public interface ShiftRepository extends CrudRepository<Shift, Long> {
 
-    List<Shift> getAllByUser(User user);
+    List<Shift> findByUser_EmployeeId(Long employeeId);
+    List<Shift> findByUser(User user);
+
 }

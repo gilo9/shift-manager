@@ -14,8 +14,11 @@ public class ShiftService {
     @Autowired
     private ShiftRepository shiftRepository;
 
-    public List<Shift> getAllShifts(User user) {
-        return shiftRepository.getAllByUser(user);
-
+    public List<Shift> shiftByUser(Long EmployeeId) {
+        return shiftRepository.findByUser_EmployeeId(EmployeeId);
     }
+    public List<Shift> shiftByUser(User user) {
+        return shiftRepository.findByUser(user);
+    }
+
 }
