@@ -1,5 +1,6 @@
 package mwa.giles.shiftmanager.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import mwa.giles.shiftmanager.model.Shift;
 import mwa.giles.shiftmanager.model.User;
@@ -8,11 +9,15 @@ import mwa.giles.shiftmanager.service.ShiftService;
 import mwa.giles.shiftmanager.service.UserService;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.security.Principal;
 import java.util.List;
 
@@ -41,7 +46,7 @@ public class ShiftManagerController {
         String username = principal.getName();
         model.addAttribute("username", username);
 
-        logger.info("Logged in as:" + username);
+        logger.info("Logged in as:{}", username);
 try{
         List<Shift> shifts= shiftService.shiftByUser(userService.findEmployeeByEmail(username)
                 .orElseThrow(()-> new UsernameNotFoundException("User not found")));
@@ -56,15 +61,21 @@ try{
 
 
     @PostMapping("/register")
-    public String handleRegister(@ModelAttribute userDTO newUser) {
-        System.out.println(newUser.getFirstname() + " " + newUser.getLastname());
-        try{
-            userService.registerUser(newUser);}
-        catch (Exception e){
-            logger.error("register error: ", e);
-            return  "redirect:/login?register=true?error=true";
+    public String handleRegister(@Valid @ModelAttribute("newUser") userDTO newUser,
+                                 BindingResult result,
+                                 Model model) {
+        if (result.hasErrors()){
+            model.addAttribute("forceRegister", true);
+            return "login";
         }
-
+        try{
+            userService.registerUser(newUser);
+        } catch (IllegalArgumentException | DataIntegrityViolationException e){
+            return "redirect:/login?register=true&duplicate=true&error";
+        } catch (Exception e){
+            logger.error("register error: ", e);
+            return  "redirect:/login?register=true&error";
+        }
         return "redirect:/login?registered=true";
     }
 }
